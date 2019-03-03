@@ -1,9 +1,8 @@
 package com.blank.pickpic.di
 
-import okhttp3.HttpUrl
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.Request
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.json.Json
+import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
@@ -39,6 +38,12 @@ val networkModule = Kodein.Module("network_moduel") {
         Retrofit.Builder()
             .client(instance("http_client"))
             .baseUrl("https://api.unsplash.com/")
+    }
+
+    bind<Retrofit>() with singleton {
+        instance<Retrofit.Builder>("retrofit_builder")
+            .addConverterFactory(Json.asConverterFactory(MediaType.get("application/json")))
+            .build()
     }
 
 }

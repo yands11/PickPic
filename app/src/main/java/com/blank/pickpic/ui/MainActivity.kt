@@ -1,21 +1,30 @@
-package com.blank.pickpic
+package com.blank.pickpic.ui
 
 import android.os.Bundle
-import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import com.blank.pickpic.R
 import com.blank.pickpic.databinding.MainActivityBinding
-import com.blank.pickpic.newup.NewUpFragment
+import com.blank.pickpic.ui.collections.CollectionsFragment
+import com.blank.pickpic.ui.featured.FeaturedFragment
+import com.blank.pickpic.ui.newup.NewUpFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var binding: MainActivityBinding
+
+    private val newUpFragment by lazy { NewUpFragment() }
+    private val featuredFragment by lazy { FeaturedFragment() }
+    private val collectionsFragment by lazy { CollectionsFragment() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         initView()
         initBottomNav(binding.bottomNav)
-        initFragment(binding.container)
+        replaceFragment(newUpFragment)
     }
 
     private fun initView() {
@@ -28,12 +37,15 @@ class MainActivity : AppCompatActivity() {
         bottomNav.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_new -> {
+                    replaceFragment(newUpFragment)
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.nav_featured -> {
+                    replaceFragment(featuredFragment)
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.nav_collections -> {
+                    replaceFragment(collectionsFragment)
                     return@setOnNavigationItemSelectedListener true
                 }
             }
@@ -41,9 +53,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initFragment(container: FrameLayout) {
+    private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.container, NewUpFragment())
+            replace(R.id.container, fragment)
             addToBackStack(null)
             commit()
         }

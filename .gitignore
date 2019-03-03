@@ -36,6 +36,7 @@ local.properties
 
 # IntelliJ files
 .idea
+.idea/misc.xml
 *.iml
 
 # OSX files
