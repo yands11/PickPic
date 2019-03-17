@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.blank.pickpic.databinding.FeaturedFragmentBinding
+import com.blank.pickpic.presentation.featured.FeaturedViewModel
 
 class FeaturedFragment : Fragment() {
 
@@ -14,6 +15,9 @@ class FeaturedFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         FeaturedFragmentBinding.inflate(inflater, container, false).also {
             binding = it
+        }.apply {
+            lifecycleOwner = this@FeaturedFragment
+            vm = FeaturedViewModel()
         }.root
 
 }

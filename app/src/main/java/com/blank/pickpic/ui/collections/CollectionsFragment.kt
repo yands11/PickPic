@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.blank.pickpic.databinding.CollectionsFragmentBinding
+import com.blank.pickpic.presentation.collections.CollectionsViewModel
 
 
 class CollectionsFragment : Fragment() {
@@ -14,6 +15,9 @@ class CollectionsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         CollectionsFragmentBinding.inflate(inflater, container, false).also {
             binding = it
+        }.apply {
+            lifecycleOwner = this@CollectionsFragment
+            vm = CollectionsViewModel()
         }.root
 
 }
