@@ -6,6 +6,6 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 
 
-class BaseKodeinFragment : Fragment(), KodeinAware {
+open class BaseKodeinFragment : Fragment(), KodeinAware {
     override val kodein: Kodein by kodein()
 }

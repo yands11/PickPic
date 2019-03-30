@@ -11,7 +11,7 @@ import org.kodein.di.generic.singleton
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 
-val networkModule = Kodein.Module("network_moduel") {
+val networkModule = Kodein.Module("network_module") {
 
     bind<Interceptor>("query_interceptor") with singleton {
         Interceptor { chain ->
@@ -37,14 +37,14 @@ val networkModule = Kodein.Module("network_moduel") {
 
     bind<Retrofit.Builder>("retrofit_builder") with singleton {
         Retrofit.Builder()
-            .client(instance("http_client"))
+            .client(instance<OkHttpClient>("http_client"))
             .baseUrl("https://api.unsplash.com/")
     }
 
     bind<Retrofit>() with singleton {
         instance<Retrofit.Builder>("retrofit_builder")
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(Json.asConverterFactory(MediaType.get("application/json")))
+            .addConverterFactory(Json.nonstrict.asConverterFactory(MediaType.get("application/json")))
             .build()
     }
 
