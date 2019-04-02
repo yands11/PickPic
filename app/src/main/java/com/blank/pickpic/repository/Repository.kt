@@ -7,6 +7,6 @@ import com.blank.pickpic.functional.Either
 
 abstract interface PhotoRepository {
 
-    fun getPhotos(page: Int): Either<Failure, List<Photo>>
+    fun getPhotos(page: Int): Either<List<Photo>, Failure>
 
 }

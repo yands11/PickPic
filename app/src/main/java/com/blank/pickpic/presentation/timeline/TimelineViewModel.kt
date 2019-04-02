@@ -13,15 +13,18 @@ class TimelineViewModel(
 ) : ViewModel() {
 
     private val _photoListResult = MutableLiveData<List<Photo>>()
+    private val _visibleProgress = MutableLiveData<Boolean>()
 
     val input: TimelineViewModelInput = object : TimelineViewModelInput {
         override fun loadPhotos() {
-            getPhotos(Unit) { it.either(::handleFailure, ::handlePhotos) }
+            _visibleProgress.value = true
+            getPhotos(Unit) { it.either(::handlePhotos, ::handleFailure) }
         }
     }
 
     val output: TimelineViewModelOutput = object : TimelineViewModelOutput {
         override fun photos(): LiveData<List<Photo>> = _photoListResult
+        override fun isLoading(): LiveData<Boolean> = _visibleProgress
     }
 
     init {
@@ -29,10 +32,12 @@ class TimelineViewModel(
     }
 
     fun handlePhotos(photos: List<Photo>) {
+        _visibleProgress.postValue(false)
         _photoListResult.postValue(photos)
     }
 
     fun handleFailure(failure: Failure) {
+        _visibleProgress.postValue(false)
         Timber.e(
             when (failure) {
                 Failure.ServerError -> "ServerError"
@@ -49,4 +54,5 @@ interface TimelineViewModelInput {
 
 interface TimelineViewModelOutput {
     fun photos(): LiveData<List<Photo>>
+    fun isLoading(): LiveData<Boolean>
 }

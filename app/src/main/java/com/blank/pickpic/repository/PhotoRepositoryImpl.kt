@@ -11,15 +11,15 @@ class PhotoRepositoryImpl(
     private val upsplashService: UpsplashService
 ) : PhotoRepository {
 
-    override fun getPhotos(page: Int): Either<Failure, List<Photo>> = try {
+    override fun getPhotos(page: Int): Either<List<Photo>, Failure> = try {
         val response = upsplashService.getPhotos(page).execute()
         when (response.isSuccessful) {
-            true -> Either.Right(response.body() as List<Photo>)
-            false -> Either.Left(Failure.ServerError)
+            true -> Either.Left(response.body() as List<Photo>)
+            false -> Either.Right(Failure.ServerError)
         }
     } catch (e: Throwable) {
         Timber.e(e)
-        Either.Left(Failure.NetworkConnection)
+        Either.Right(Failure.NetworkConnection)
     }
 
 }

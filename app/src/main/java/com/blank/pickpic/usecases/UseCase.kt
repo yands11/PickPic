@@ -4,8 +4,8 @@ import com.blank.pickpic.exception.Failure
 import com.blank.pickpic.functional.Either
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Abstract class for a Use Case (Interactor in terms of Clean Architecture).
@@ -17,16 +17,16 @@ import kotlinx.coroutines.launch
  */
 abstract class UseCase<out Type, in Params> where Type : Any {
 
-    abstract suspend fun run(params: Params): Either<Failure, Type>
+    abstract suspend fun run(params: Params): Either<Type, Failure>
 
     operator fun invoke(
         params: Params,
-        onResult: (Either<Failure, Type>) -> Unit = {}
+        onResult: (Either<Type, Failure>) -> Unit = {}
     ) {
         CoroutineScope(Dispatchers.Main).launch {
-            CoroutineScope(Dispatchers.Default).async {
+            withContext(CoroutineScope(Dispatchers.Default).coroutineContext) {
                 onResult(run(params))
-            }.await()
+            }
         }
     }
 

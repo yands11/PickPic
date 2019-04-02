@@ -10,7 +10,7 @@ class GetPhotos(
     private val photoRepository: PhotoRepository
 ) : UseCase<List<Photo>, Unit>() {
 
-    override suspend fun run(params: Unit): Either<Failure, List<Photo>> =
+    override suspend fun run(params: Unit): Either<List<Photo>, Failure> =
         photoRepository.getPhotos(1)
 
 }
