@@ -1,60 +1,37 @@
-opyright: Benjamin Weiss (keyboardsurfer) https://github.com/keyboardsurfer
-# Under CC-BY-SA V3.0 (https://creativecommons.org/licenses/by-sa/3.0/legalcode)
+# Built application files
+/*/build/
 
-# built application files
-*.apk
-*.ap_
-*.jar
-!gradle/wrapper/gradle-wrapper.jar
-
-# lint folder
-lint
-
-# files for the dex VM
-*.dex
-
-# Java class files
-*.class
-
-# generated files
-bin/
-gen/
-classes/
-gen-external-apklibs/
-
-# maven output folder
-target
+# Crashlytics configuations
+com_crashlytics_export_strings.xml
 
 # Local configuration file (sdk path, etc)
 local.properties
 
-# Eclipse project files
-.classpath
-.project
-.metadata
-.settings
+# Gradle generated files
+.gradle/
 
-# IntelliJ files
-.idea
+# Signing files
+.signing/
+
+# User-specific configurations
+.idea/libraries/
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/.name
+.idea/compiler.xml
+.idea/copyright/profiles_settings.xml
+.idea/encodings.xml
 .idea/misc.xml
+.idea/modules.xml
+.idea/scopes/scope_settings.xml
+.idea/vcs.xml
 *.iml
 
-# OSX files
+# OS-specific files
 .DS_Store
-
-# Windows files
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
-
-# vi swap files
-*.swp
-
-# backup files
-*.bak
-
-# gradle directory
-.gradle
-build/
-
-#for oh-my-zsh jira plugin (https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins#jira)
-.jira-url
-atlassian-ide-plugin.xml
