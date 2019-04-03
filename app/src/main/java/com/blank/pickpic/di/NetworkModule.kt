@@ -9,7 +9,6 @@ import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 
 val networkModule = Kodein.Module("network_module") {
 
@@ -43,7 +42,6 @@ val networkModule = Kodein.Module("network_module") {
 
     bind<Retrofit>() with singleton {
         instance<Retrofit.Builder>("retrofit_builder")
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(Json.nonstrict.asConverterFactory(MediaType.get("application/json")))
             .build()
     }
