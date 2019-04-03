@@ -26,6 +26,10 @@ class MainActivity : BaseKodeinActivity() {
         replaceFragment(timelineFragment)
     }
 
+    override fun onBackPressed() {
+        finish()
+    }
+
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.container, fragment)
