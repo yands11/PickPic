@@ -15,20 +15,20 @@ import kotlinx.coroutines.withContext
  * By convention each [UseCase] implementation will execute its job in a background thread
  * (kotlin coroutine) and will post the result in the UI thread.
  */
-abstract class UseCase<out Type, in Params> where Type : Any {
-
-    abstract suspend fun run(params: Params): Either<Type, Failure>
+abstract class UseCase<out T, in P> where T : Any {
 
     operator fun invoke(
-        params: Params,
-        onResult: (Either<Type, Failure>) -> Unit = {}
+        params: P,
+        onResult: (Either<T, Failure>) -> Unit = {}
     ) {
         CoroutineScope(Dispatchers.Main).launch {
-            withContext(CoroutineScope(Dispatchers.Default).coroutineContext) {
+            withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
                 onResult(run(params))
             }
         }
     }
+
+    abstract suspend fun run(params: P): Either<T, Failure>
 
     class None
 }

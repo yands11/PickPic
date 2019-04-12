@@ -15,20 +15,20 @@ class TimelineViewModel(
     private val _photoListResult = MutableLiveData<List<Photo>>()
     private val _visibleProgress = MutableLiveData<Boolean>()
 
-    val input: TimelineViewModelInput = object : TimelineViewModelInput {
+    val trigger: Trigger = object : Trigger {
         override fun loadPhotos() {
             _visibleProgress.value = true
             getPhotos(Unit) { it.either(::handlePhotos, ::handleFailure) }
         }
     }
 
-    val output: TimelineViewModelOutput = object : TimelineViewModelOutput {
-        override fun photos(): LiveData<List<Photo>> = _photoListResult
-        override fun isLoading(): LiveData<Boolean> = _visibleProgress
+    val bundle: LiveBundle = object : LiveBundle {
+        override val photos: LiveData<List<Photo>> = _photoListResult
+        override val isLoading: LiveData<Boolean> = _visibleProgress
     }
 
     init {
-        input.loadPhotos()
+        trigger.loadPhotos()
     }
 
     fun handlePhotos(photos: List<Photo>) {
@@ -46,13 +46,14 @@ class TimelineViewModel(
             }
         )
     }
+
+    interface Trigger {
+        fun loadPhotos()
+    }
+
+    interface LiveBundle {
+        val photos: LiveData<List<Photo>>
+        val isLoading: LiveData<Boolean>
+    }
 }
 
-interface TimelineViewModelInput {
-    fun loadPhotos()
-}
-
-interface TimelineViewModelOutput {
-    fun photos(): LiveData<List<Photo>>
-    fun isLoading(): LiveData<Boolean>
-}

@@ -10,7 +10,7 @@ import com.blank.pickpic.databinding.HolderPhotoBinding
 
 class TimelineAdapter(
     private val lifecycleOwner: LifecycleOwner
-) : RecyclerView.Adapter<PhotoViewHolder>() {
+) : RecyclerView.Adapter<TimelineAdapter.PhotoViewHolder>() {
 
     private var photos: List<Photo> = emptyList()
 
@@ -30,14 +30,15 @@ class TimelineAdapter(
         this.photos = photos.orEmpty()
         notifyDataSetChanged()
     }
-}
 
-class PhotoViewHolder(
-    private val binding: HolderPhotoBinding,
-    private val lifecycleOwner: LifecycleOwner
-) : RecyclerView.ViewHolder(binding.root) {
+    inner class PhotoViewHolder(
+        private val binding: HolderPhotoBinding,
+        private val lifecycleOwner: LifecycleOwner
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun onBind(photo: Photo) {
-        binding.photo = photo
+        fun onBind(photo: Photo) {
+            binding.photo = photo
+        }
     }
 }
+

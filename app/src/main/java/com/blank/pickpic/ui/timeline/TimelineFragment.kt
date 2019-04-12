@@ -46,8 +46,8 @@ class TimelineFragment : BaseKodeinFragment() {
     }
 
     private fun subscribe(viewModel: TimelineViewModel) {
-        with(viewModel.output) {
-            photos().observe(this@TimelineFragment, Observer {
+        with(viewModel.bundle) {
+            photos.observe(this@TimelineFragment, Observer {
                 this@TimelineFragment.adapter.handlePhotos(it)
             })
         }
