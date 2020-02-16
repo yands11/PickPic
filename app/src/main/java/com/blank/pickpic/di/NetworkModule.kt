@@ -1,5 +1,6 @@
 package com.blank.pickpic.di
 
+import android.os.Bundle
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.*
@@ -12,11 +13,15 @@ import retrofit2.Retrofit
 
 val networkModule = Kodein.Module("network_module") {
 
+    bind<String>("upsplash_key") with singleton {
+        instance<Bundle>("meta-data").getString("key_upsplash")
+    }
+
     bind<Interceptor>("query_interceptor") with singleton {
         Interceptor { chain ->
             var request: Request = chain.request()
             val queryAddedUrl: HttpUrl = request.url().newBuilder()
-                .addQueryParameter("client_id", "7953b566183c3fd1669c3f8f0cab5069b4039974ae793780ce492bbfc1a82ec0")
+                .addQueryParameter("client_id", instance<String>("upsplash_key"))
                 .build()
             request = request.newBuilder().url(queryAddedUrl).build()
             chain.proceed(request)

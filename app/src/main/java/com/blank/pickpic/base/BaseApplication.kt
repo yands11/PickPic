@@ -12,6 +12,7 @@ class BaseApplication : Application(), KodeinAware {
 
     override val kodein: Kodein = Kodein.lazy {
         import(androidXModule(this@BaseApplication))
+        import(commonModule)
         import(networkModule)
         import(apiModule)
         import(repositoryModule)
